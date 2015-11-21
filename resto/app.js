@@ -1,14 +1,23 @@
 var express = require('express');
-var meseros = require('./routes/meseros');
 var app = express();
+var util = require('util');
+var db = require('./model/db');
+var entity_manager= require('./model/entity');
+var meseros = entity_manager(db,'meseros');
+var encuestas = entity_manager(db, 'encuestas');
+console.log(util.inspect(meseros));
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
-app.get('/api/meseros', meseros.findAll );
-app.get('/api/meseros/:id', meseros.findById );
-app.post('/api/meseros', meseros.addMesero);
-app.put('/api/meseros/:id', meseros.updateMesero);
-app.delete('/api/meseros/:id', meseros.deleteMesero);
 
+/* Resolve the methods for REST */
+var entities = [meseros, encuestas];
+for(var a =0;a<entities.length;a++) {
+	app.get('/api/'+entities[a].name, entities[a].findAll );
+	app.get('/api/'+ entities[a].name + '/:id', entities[a].findById );
+	app.post('/api/'+ entities[a].name, entities[a].addEntity);
+	app.put('/api/'+ entities[a].name+ '/:id', entities[a].updateEntity);
+	app.delete('/api/'+ entities[a].name + '/:id', entities[a].deleteEntity);
+}
 var server = app.listen(3000, function () {
   var host = server.address().address;
   var port = server.address().port;
