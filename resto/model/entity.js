@@ -15,6 +15,13 @@ var db;
 MongoClient.connect(url, function(err, database) {
 	console.log('Connecting to '+url + '!!!');
 	db = database.db('resto');
+	db.authenticate("restonode","restonode01", function(err,result) {
+		if(err) {
+			console.log("Reauthentication failed");
+		} else {
+			console.log('Authenticated');
+		}
+	});
 });
 module.exports = function(table) {
 	var answer = {
@@ -53,7 +60,7 @@ module.exports = function(table) {
 				} else {
 					collection.insert(entity, {safe:true}, function(err, result) {
 						if (err) {
-							console.log('Error adding '+err+ "->"+db.runCommand({connectionStatus : 1}));
+							console.log('Error adding '+err);
 							res.send({'error':'An error has occurred '+err});
 						} else {
 							console.log('Success: ' + JSON.stringify(result));
