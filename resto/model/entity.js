@@ -53,8 +53,8 @@ module.exports = function(table) {
 				collection.insert(entity, {safe:true}, function(err, result) {
 					if (err) {
 						console.log('Error adding '+err);
-						res.send({'error':'An error has occurred '+err});
 					 	console.log("Authenticated user: "+db.runCommand({connectionStatus:1}).authInfo.authenticatedUsers[0]);
+						res.send({'error':'An error has occurred '+err});
 					} else {
 						console.log('Success: ' + JSON.stringify(result[0]));
 						res.send(result[0]);
