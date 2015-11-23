@@ -6,12 +6,25 @@ findAll
 */
 
 var util = require('util');
-module.exports = function(db,table) {
+// Inspired by https://mongodb.github.io/node-mongodb-native/driver-articles/mongoclient.html
+var mongodb = require('mongodb');
+var MongoClient = mongodb.MongoClient;
+var util = require('util');
+var url = 'mongodb://localhost:27017/resto';
+var db;
+MongoClient.connect(url, function(err, database) {
+	console.log('Connecting!!!');
+	db = database.db('resto');
+	db.ObjectID = mongodb.ObjectID;
+	module.exports = db;
+	
+});
+module.exports = function(table) {
 	var answer = {
 		name : table,
 		findById : function(req, res) {
 			var id = req.params.id;
-			console.log('Retrieving ' + table + ': ' + id+ "->"+db);
+			console.log('Retrieving ' + table + ': ' + id+ "->"+util.inspect(db));
 			db.collection(table, function(err, collection) {
 				collection.findOne({'_id':new db.ObjectID(id)}, function(err, item) {
 					res.send(item);
@@ -19,6 +32,7 @@ module.exports = function(db,table) {
 			});
 		},
 		findAll : function(req, res) {
+			console.log('Retrieving ' + table + ': ->'+db);
 			db.collection(table, function(err, collection) {
 					collection.find().toArray(function(err, items) {
 					res.send(items);
