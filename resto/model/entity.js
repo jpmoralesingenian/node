@@ -34,9 +34,13 @@ module.exports = function(table) {
 		findAll : function(req, res) {
 			console.log('Retrieving ' + table + ': ->'+db);
 			db.collection(table, function(err, collection) {
+				if(err) {
+					console.log("Error in find: "+ err);
+				} else {
 					collection.find().toArray(function(err, items) {
-					res.send(items);
-				});
+						res.send(items);
+					});
+				} 
 			});
 		},
 		addEntity: function(req, res) {
@@ -48,7 +52,9 @@ module.exports = function(table) {
 			db.collection(table, function(err, collection) {
 				collection.insert(entity, {safe:true}, function(err, result) {
 					if (err) {
+						console.log('Error adding '+err);
 						res.send({'error':'An error has occurred '+err});
+					 	console.log("Authenticated user: "+db.runCommand({connectionStatus:1}).authInfo.authenticatedUsers[0]);
 					} else {
 						console.log('Success: ' + JSON.stringify(result[0]));
 						res.send(result[0]);
