@@ -50,16 +50,20 @@ module.exports = function(table) {
 			if(entity.when) entity.when = new Date(entity.when);
 			console.log('Adding ' + table + ': ' + JSON.stringify(entity));
 			db.collection(table, function(err, collection) {
-				collection.insert(entity, {safe:true}, function(err, result) {
-					if (err) {
-						console.log('Error adding '+err);
-					 	console.log("Authenticated user: "+db.runCommand({connectionStatus:1}).authInfo.authenticatedUsers[0]);
-						res.send({'error':'An error has occurred '+err});
-					} else {
-						console.log('Success: ' + JSON.stringify(result[0]));
-						res.send(result[0]);
-					}
-				});
+				if(err) {
+					console.log('Error before adding '+ err);
+					res.send({'error':'An error has occurred '+err});
+				} else {
+					collection.insert(entity, {safe:true}, function(err, result) {
+						if (err) {
+							console.log('Error adding '+err);
+							res.send({'error':'An error has occurred '+err});
+						} else {
+							console.log('Success: ' + JSON.stringify(result[0]));
+							res.send(result[0]);
+						}
+					});
+				}
 			});	
 		},
 		updateEntity: function(req, res) {
@@ -68,29 +72,39 @@ module.exports = function(table) {
 			console.log('Updating '+ table + ': ' + id);
 			console.log(JSON.stringify(entity));
 			db.collection(table, function(err, collection) {
-				collection.update({'_id':new db.ObjectID(id)}, entity, {safe:true}, function(err, result) {
-					if (err) {
-						console.log('Error updating '+ table + ': ' + err);
-						res.send({'error':'An error has occurred '+err});
-					} else {
-						console.log('' + result + ' document(s) updated');
-						res.send(entity);
-					}
-				});
+				if(err) {
+					console.log('Error before updating '+ table + ': ' + err);
+					res.send({'error':'An error has occurred '+err});
+				} else {
+					collection.update({'_id':new db.ObjectID(id)}, entity, {safe:true}, function(err, result) {
+						if (err) {
+							console.log('Error updating '+ table + ': ' + err);
+							res.send({'error':'An error has occurred '+err});
+						} else {
+							console.log('' + result + ' document(s) updated');
+							res.send(entity);
+						}
+					});
+				}
 			});
 		},
 		deleteEntity : function(req, res) {
 			var id = req.params.id;
 			console.log('Deleting '+ table + ': ' + id);
 			db.collection(table, function(err, collection) {
-				collection.remove({'_id':new db.ObjectID(id)}, {safe:true}, function(err, result) {
-					if (err) {
-						res.send({'error':'An error has occurred ' + err});
-					} else {
-						console.log('' + result + ' document(s) deleted');
-						res.send(req.body);
-					}
-				});
+				if(err) {
+					console.log('Error before delete '+err);
+					res.send({'error':'An error has occurred ' + err});
+				} else {
+					collection.remove({'_id':new db.ObjectID(id)}, {safe:true}, function(err, result) {
+						if (err) {
+							res.send({'error':'An error has occurred ' + err});
+						} else {
+							console.log('' + result + ' document(s) deleted');
+							res.send(req.body);
+						}
+					});
+				}
 			});
 		}
 	};
