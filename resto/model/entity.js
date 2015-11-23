@@ -48,7 +48,7 @@ module.exports = function(table) {
 			db.collection(table, function(err, collection) {
 				collection.insert(entity, {safe:true}, function(err, result) {
 					if (err) {
-						res.send({'error':'An error has occurred'});
+						res.send({'error':'An error has occurred '+err});
 					} else {
 						console.log('Success: ' + JSON.stringify(result[0]));
 						res.send(result[0]);
@@ -65,7 +65,7 @@ module.exports = function(table) {
 				collection.update({'_id':new db.ObjectID(id)}, entity, {safe:true}, function(err, result) {
 					if (err) {
 						console.log('Error updating '+ table + ': ' + err);
-						res.send({'error':'An error has occurred'});
+						res.send({'error':'An error has occurred '+err});
 					} else {
 						console.log('' + result + ' document(s) updated');
 						res.send(entity);
@@ -79,7 +79,7 @@ module.exports = function(table) {
 			db.collection(table, function(err, collection) {
 				collection.remove({'_id':new db.ObjectID(id)}, {safe:true}, function(err, result) {
 					if (err) {
-						res.send({'error':'An error has occurred - ' + err});
+						res.send({'error':'An error has occurred ' + err});
 					} else {
 						console.log('' + result + ' document(s) deleted');
 						res.send(req.body);
