@@ -14,14 +14,8 @@ var url = process.env.MONGOLAB_URI || 'mongodb://localhost:27017/resto';
 var db;
 MongoClient.connect(url, function(err, database) {
 	console.log('Connecting to '+url + '!!!');
-	db = database.db('resto');
-	db.authenticate("restonode","restonode01", function(err,result) {
-		if(err) {
-			console.log("Reauthentication failed");
-		} else {
-			console.log('Authenticated');
-		}
-	});
+	var database_name = url.substring(url.lastIndexOf('/')+1);
+	db = database.db(database_name);
 });
 module.exports = function(table) {
 	var answer = {
