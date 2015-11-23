@@ -15,9 +15,6 @@ var db;
 MongoClient.connect(url, function(err, database) {
 	console.log('Connecting to '+url + '!!!');
 	db = database.db('resto');
-	db.ObjectID = mongodb.ObjectID;
-	module.exports = db;
-	
 });
 module.exports = function(table) {
 	var answer = {
@@ -26,7 +23,7 @@ module.exports = function(table) {
 			var id = req.params.id;
 			console.log('Retrieving ' + table + ': ' + id+ "->"+util.inspect(db));
 			db.collection(table, function(err, collection) {
-				collection.findOne({'_id':new db.ObjectID(id)}, function(err, item) {
+				collection.findOne({'_id':new mongodb.ObjectID(id)}, function(err, item) {
 					res.send(item);
 				});
 			});
@@ -56,11 +53,11 @@ module.exports = function(table) {
 				} else {
 					collection.insert(entity, {safe:true}, function(err, result) {
 						if (err) {
-							console.log('Error adding '+err);
+							console.log('Error adding '+err+ "->"+db.runCommand({connectionStatus : 1}));
 							res.send({'error':'An error has occurred '+err});
 						} else {
-							console.log('Success: ' + JSON.stringify(result[0]));
-							res.send(result[0]);
+							console.log('Success: ' + JSON.stringify(result));
+							res.send(result);
 						}
 					});
 				}
@@ -76,7 +73,7 @@ module.exports = function(table) {
 					console.log('Error before updating '+ table + ': ' + err);
 					res.send({'error':'An error has occurred '+err});
 				} else {
-					collection.update({'_id':new db.ObjectID(id)}, entity, {safe:true}, function(err, result) {
+					collection.update({'_id':new mongodb.ObjectID(id)}, entity, {safe:true}, function(err, result) {
 						if (err) {
 							console.log('Error updating '+ table + ': ' + err);
 							res.send({'error':'An error has occurred '+err});
@@ -96,7 +93,7 @@ module.exports = function(table) {
 					console.log('Error before delete '+err);
 					res.send({'error':'An error has occurred ' + err});
 				} else {
-					collection.remove({'_id':new db.ObjectID(id)}, {safe:true}, function(err, result) {
+					collection.remove({'_id':new mongodb.ObjectID(id)}, {safe:true}, function(err, result) {
 						if (err) {
 							res.send({'error':'An error has occurred ' + err});
 						} else {
@@ -120,7 +117,7 @@ function fixIds(db,object) {
 			continue;
     	}
 		if(property=='_id') {
-			object[property] = db.ObjectID(object[property]);
+			object[property] = mongodb.ObjectID(object[property]);
 			continue;
 		}
 		if(Array.isArray(object[property])) {
