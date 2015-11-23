@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+app.set('port', (process.env.PORT || 5000));
 var util = require('util');
 var db = require('./model/db');
 var entity_manager= require('./model/entity');
@@ -25,7 +26,7 @@ app.get('*.html', function(req, res) {
   res.sendFile(__dirname+ '/public/reports.html');
  });
 app.use(express.static(__dirname + '/public')); // set the static files location /public/img will be /img for users
-var server = app.listen(3000, function () {
+var server = app.listen(app.get('port'), function () {
   var host = server.address().address;
   var port = server.address().port;
 
