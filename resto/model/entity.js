@@ -10,10 +10,10 @@ var util = require('util');
 var mongodb = require('mongodb');
 var MongoClient = mongodb.MongoClient;
 var util = require('util');
-var url = 'mongodb://localhost:27017/resto';
+var url = process.env.MONGOLAB_URI || 'mongodb://localhost:27017/resto';
 var db;
 MongoClient.connect(url, function(err, database) {
-	console.log('Connecting!!!');
+	console.log('Connecting to '+url + '!!!');
 	db = database.db('resto');
 	db.ObjectID = mongodb.ObjectID;
 	module.exports = db;
