@@ -18,6 +18,13 @@ for(var a =0;a<entities.length;a++) {
 	app.put('/api/'+ entities[a].name+ '/:id', entities[a].updateEntity);
 	app.delete('/api/'+ entities[a].name + '/:id', entities[a].deleteEntity);
 }
+
+/* Frontend */
+// frontend routes =========================================================
+app.get('*.html', function(req, res) {
+  res.sendFile(__dirname+ '/public/reports.html');
+ });
+app.use(express.static(__dirname + '/public')); // set the static files location /public/img will be /img for users
 var server = app.listen(3000, function () {
   var host = server.address().address;
   var port = server.address().port;

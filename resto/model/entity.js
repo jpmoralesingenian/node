@@ -11,9 +11,9 @@ module.exports = function(db,table) {
 		name : table,
 		findById : function(req, res) {
 			var id = req.params.id;
-			console.log('Retrieving ' + table + ': ' + id);
+			console.log('Retrieving ' + table + ': ' + id+ "->"+db);
 			db.collection(table, function(err, collection) {
-				collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
+				collection.findOne({'_id':new db.ObjectID(id)}, function(err, item) {
 					res.send(item);
 				});
 			});
@@ -28,6 +28,8 @@ module.exports = function(db,table) {
 		addEntity: function(req, res) {
 			console.log('Request is: ' + util.inspect(req.body));
 			var entity = req.body;
+			entity = fixIds(db,entity);
+			if(entity.when) entity.when = new Date(entity.when);
 			console.log('Adding ' + table + ': ' + JSON.stringify(entity));
 			db.collection(table, function(err, collection) {
 				collection.insert(entity, {safe:true}, function(err, result) {
@@ -46,7 +48,7 @@ module.exports = function(db,table) {
 			console.log('Updating '+ table + ': ' + id);
 			console.log(JSON.stringify(entity));
 			db.collection(table, function(err, collection) {
-				collection.update({'_id':new BSON.ObjectID(id)}, entity, {safe:true}, function(err, result) {
+				collection.update({'_id':new db.ObjectID(id)}, entity, {safe:true}, function(err, result) {
 					if (err) {
 						console.log('Error updating '+ table + ': ' + err);
 						res.send({'error':'An error has occurred'});
@@ -61,7 +63,7 @@ module.exports = function(db,table) {
 			var id = req.params.id;
 			console.log('Deleting '+ table + ': ' + id);
 			db.collection(table, function(err, collection) {
-				collection.remove({'_id':new BSON.ObjectID(id)}, {safe:true}, function(err, result) {
+				collection.remove({'_id':new db.ObjectID(id)}, {safe:true}, function(err, result) {
 					if (err) {
 						res.send({'error':'An error has occurred - ' + err});
 					} else {
@@ -73,4 +75,27 @@ module.exports = function(db,table) {
 		}
 	};
 	return answer;
+}
+/*
+ Make sure all properties called _id are ObjectID
+ */
+function fixIds(db,object) {
+	for (var property in object) {
+		// It is not my property
+	    if (!object.hasOwnProperty(property)) {
+			continue;
+    	}
+		if(property=='_id') {
+			object[property] = db.ObjectID(object[property]);
+			continue;
+		}
+		if(Array.isArray(object[property])) {
+			var arr = object[property];
+			arr.forEach(function(value,index,array) {
+				array[index] = fixIds(db,value);
+			});		
+			object[property] = arr;	
+		}
+	}
+	return object;
 }
