@@ -5,12 +5,22 @@ var util = require('util');
 var entity_manager= require('./model/entity');
 var meseros = entity_manager('meseros');
 var encuestas = entity_manager('encuestas');
+var locations = entity_manager('locations');
 console.log(util.inspect(meseros));
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
-
+var logger = function(req,res,next) {
+	console.log(req.method + " " + req.url);
+	next();
+}
+app.use(logger);
+app.all('*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+});
 /* Resolve the methods for REST */
-var entities = [meseros, encuestas];
+var entities = [meseros, encuestas,locations];
 for(var a =0;a<entities.length;a++) {
 	app.get('/api/'+entities[a].name, entities[a].findAll );
 	app.get('/api/'+ entities[a].name + '/:id', entities[a].findById );

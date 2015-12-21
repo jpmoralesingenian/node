@@ -36,7 +36,7 @@ module.exports = function(table) {
 					console.log("Error in find: "+ err);
 				} else {
 					collection.find().toArray(function(err, items) {
-						res.send(items);
+						res.status(200).send(items);
 					});
 				} 
 			});
