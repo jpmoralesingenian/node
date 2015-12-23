@@ -1,0 +1,10 @@
+<ion-view view-title="Joshua: Puntos">
+  <ion-content>
+    <p>No es posible ubicar en que punto se encuentra, por favor indíquenos en que punto está:</p>
+    <ion-list>
+      <ion-item ng-repeat="locattion in locattions" href="#/app/{{locattion._id}}/meseros">
+        {{locattion.name}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
