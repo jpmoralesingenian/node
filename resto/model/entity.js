@@ -30,12 +30,26 @@ module.exports = function(table) {
 			});
 		},
 		findAll : function(req, res) {
-			console.log('Retrieving ' + table + ': ->'+db);
+			var params = {};
+			console.log('Retrieving ' + table + ' via findAll' );
+			for(var key in req.query) {
+				if(req.query.hasOwnProperty(key)) {
+					var value = req.query[key];
+					//If the key ends with _id it is an id, turn it into one
+					if(/_id$/.test(key)) {
+						key = key.substring(0,key.length-3);
+						params[key] = new mongodb.ObjectID(value);
+					} else {
+						params[key] = value;
+					}
+				}
+			}
+			console.log("Params are: " + util.inspect(params));
 			db.collection(table, function(err, collection) {
 				if(err) {
 					console.log("Error in find: "+ err);
 				} else {
-					collection.find().toArray(function(err, items) {
+					collection.find(params).toArray(function(err, items) {
 						res.status(200).send(items);
 					});
 				} 
