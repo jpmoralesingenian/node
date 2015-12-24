@@ -52,7 +52,15 @@ angular.module('encuesta', ['ionic', 'encuesta.controllers'])
         }
       }
     })
-
+  .state('app.encuesta', {
+     url: '/encuesta/:meseroId',
+     views: {
+	'menuContent' : {
+	   templateUrl: 'templates/encuesta.html',
+	   controller: 'EncuestaCtrl'
+	}
+    }
+   })
   .state('app.locations', {
     url: '/locations',
     views: {

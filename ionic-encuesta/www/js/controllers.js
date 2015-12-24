@@ -1,4 +1,4 @@
-angular.module('encuesta.controllers', ['encuesta.services'])
+angular.module('encuesta.controllers', ['encuesta.services','ionic.rating'])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
@@ -84,4 +84,19 @@ angular.module('encuesta.controllers', ['encuesta.services'])
 
 	
 })
+.controller('EncuestaCtrl', function($scope, $stateParams, Meseros) {
+    $scope.rate=4;
+    $scope.max =5;
+    Meseros.get({"meseroId":$stateParams.meseroId}, function(mesero) { 
+	$scope.mesero = mesero;
+    });
+})
+.controller('EncuestaSendCtrl', ['$scope', function($scope, $stateParams) {
+    //$scope.meseroId = $stateParams.meseroId;
+    console.log($stateParams);
+    console.log("Comment is ["+ $scope.comment+ "] and rate is ["+ $scope.rate+"] ["+$scope.meseroId+"]");
+    $scope.submit = function(mesero) {
+    	console.log("Submit function ["+ $scope.comment+ "] and rate is ["+ $scope.rate+"] ["+mesero._id+"]");
+    }
+}])
 ;

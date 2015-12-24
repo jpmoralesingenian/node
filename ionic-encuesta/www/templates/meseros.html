@@ -3,9 +3,8 @@
     <p>Usted se encuentra en {{locattion.name}}</p>
     <p>&iquest;Quién te atendió?</p>
     <ion-list>
-      <ion-item ng-repeat="mesero in meseros" href="#/app/meseros/{{mesero._id}}">
+      <ion-item ng-repeat="mesero in meseros" href="#/app/encuesta/{{mesero._id}}">
 	<img src="http://joshuacafebar.herokuapp.com/meseros/{{mesero._id}}.jpg" class="image-list-thumb" alt="{{mesero._id}}" width="40"/>
-
         {{mesero.name}}
       </ion-item>
     </ion-list>
