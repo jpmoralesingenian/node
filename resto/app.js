@@ -16,7 +16,7 @@ var logger = function(req,res,next) {
 app.use(logger);
 app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With, Origin, Content-Type, Accept");
     next();
 });
 /* Resolve the methods for REST */
