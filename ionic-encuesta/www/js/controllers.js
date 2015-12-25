@@ -91,12 +91,13 @@ angular.module('encuesta.controllers', ['encuesta.services','ionic.rating'])
 	$scope.mesero = mesero;
     });
 })
-.controller('EncuestaSendCtrl', ['$scope', function($scope, $stateParams) {
+.controller('EncuestaSendCtrl', ['$scope','Encuestas', function($scope, Encuestas) {
     //$scope.meseroId = $stateParams.meseroId;
-    console.log($stateParams);
     console.log("Comment is ["+ $scope.comment+ "] and rate is ["+ $scope.rate+"] ["+$scope.meseroId+"]");
     $scope.submit = function(mesero) {
+	// Rate the guy using the factory
     	console.log("Submit function ["+ $scope.comment+ "] and rate is ["+ $scope.rate+"] ["+mesero._id+"]");
+	Encuestas.save({score:$scope.rate,mesero: mesero,comments:$scope.comment}, function (){}, function (err) { console.log("Hay un error: "+ JSON.stringify(err));});
     }
 }])
 ;

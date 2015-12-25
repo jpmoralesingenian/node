@@ -5,4 +5,7 @@ angular.module('encuesta.services', ['ngResource'])
 .factory('Locations', function($resource) { 
 	return $resource('http://localhost:5000/api/locations/:locationId');
 })
+.factory('Encuestas', function($resource) { 
+	return $resource('http://localhost:5000/api/encuestas/:encuestaId');
+})
 ;
