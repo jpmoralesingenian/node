@@ -12,8 +12,24 @@
 		<rating ng-model="rate" max="max"></rating>
 			</div>
 		</div>
+		<div class="row">
 		<p>Si tienes algún comentario escríbelo aquí</p>
-		<textarea ng-model="comment" required="false"></textarea>
+		</div>
+		<div class="row">
+		<label class="item item-input">
+			<span class="input-label">Comentario</span>
+			<textarea ng-model="comment" required="false"></textarea>
+		</label>
+		</div>
+		<div class="row" ng-if="rate<=2">
+		<p>Vamos a trabajar en mejorar nuestro servicio, por favor dinos a que número te podemos contactar</p>
+		</div>
+		<div class="row" ng-if="rate<=2">
+		<label class="item item-input">
+			<span class="input-label">Teléfono</span>
+			<input type="tel" ng-model="phonenumber" ng-required="rate<=2">
+		</label>
+		</div>
 		<button ng-click="submit(mesero)" class="btn">Calificar</button>
 	</div>
       </div>

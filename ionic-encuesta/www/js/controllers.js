@@ -97,7 +97,7 @@ angular.module('encuesta.controllers', ['encuesta.services','ionic.rating'])
     $scope.submit = function(mesero) {
 	// Rate the guy using the factory
     	console.log("Submit function ["+ $scope.comment+ "] and rate is ["+ $scope.rate+"] ["+mesero._id+"]");
-	Encuestas.save({score:$scope.rate,mesero: mesero,comments:$scope.comment}, function (){}, function (err) { console.log("Hay un error: "+ JSON.stringify(err));});
+	Encuestas.save({score:$scope.rate,mesero: mesero,comments:$scope.comment, phone:$scope.phonenumber}, function (){}, function (err) { console.log("Hay un error: "+ JSON.stringify(err));});
     }
 }])
 ;
