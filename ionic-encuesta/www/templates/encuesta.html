@@ -5,8 +5,10 @@
 		<h3>{{mesero.name}}</h3>
 	</div>
 	<div class="item item-body" ng-controller="EncuestaSendCtrl">
+	<form name="encuestaForm" novalidate="" ng-submit="calificar(encuestaForm,mesero)">
 		<img src="http://joshuacafebar.herokuapp.com/meseros/{{mesero._id}}.jpg" class="image-list-thumb" alt="{{mesero._id}}" width="120"/>
-		<p>Cuéntanos como te pareció el servicio</p>
+		
+		<p>Cuéntanos que tal estuvo el servicio</p>
 		<div class="row">
 			<div class="col">
 		<rating ng-model="rate" max="max"></rating>
@@ -17,8 +19,7 @@
 		</div>
 		<div class="row">
 		<label class="item item-input">
-			<span class="input-label">Comentario</span>
-			<textarea ng-model="comment" required="false"></textarea>
+			<textarea ng-model="comment" required="false" placeholder="Comentario"></textarea>
 		</label>
 		</div>
 		<div class="row" ng-if="rate<=2">
@@ -26,12 +27,15 @@
 		</div>
 		<div class="row" ng-if="rate<=2">
 		<label class="item item-input">
-			<span class="input-label">Teléfono</span>
-			<input type="tel" ng-model="phonenumber" ng-required="rate<=2">
+			<input type="tel" ng-model="phonenumber" ng-required="rate<=2" placeholder="Teléfono" name="phonenumber">
 		</label>
+		<div class="error-container assertive" ng-show="encuestaForm.phonenumber.$error.required && sent">
+      			<i class="ion-information-circled"></i> El teléfono es requerido
+                </div>
 		</div>
-		<button ng-click="submit(mesero)" class="btn">Calificar</button>
+		<button class="button button-positive button-large" type="submit">Calificar</button>
+	</form>
 	</div>
       </div>
   </ion-content>
-</ion-viw>
+</ion-view>

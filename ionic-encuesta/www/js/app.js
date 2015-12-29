@@ -34,15 +34,6 @@ angular.module('encuesta', ['ionic', 'encuesta.controllers'])
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
   })
-
-  .state('app.search', {
-    url: '/search',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/search.html'
-      }
-    }
-  })
   .state('app.meseros', {
       url: '/:locationId/meseros',
       views: {
