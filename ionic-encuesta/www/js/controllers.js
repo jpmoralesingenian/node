@@ -1,5 +1,8 @@
 angular.module('encuesta.controllers', ['encuesta.services','ionic.rating'])
-.controller('AppCtrl',function($scope, $ionicModal, $timeout) {})
+.controller('AppCtrl',function($scope, $ionicModal, $timeout) {
+	var d = new Date();
+	$scope.number = 1+(d.getTime() %3);
+})
 .controller('MeserosCtrl', function($scope, $stateParams,Meseros,Locations) {
     Locations.get({"locationId":$stateParams.locationId}, function(loc) { 
 	$scope.locattion = loc;
@@ -48,7 +51,7 @@ angular.module('encuesta.controllers', ['encuesta.services','ionic.rating'])
 	$scope.mesero = mesero;
     });
 })
-.controller('EncuestaSendCtrl', ['$scope','Encuestas', function($scope, Encuestas) {
+.controller('EncuestaSendCtrl', ['$scope','$state','Encuestas', function($scope, $state , Encuestas) {
     //$scope.meseroId = $stateParams.meseroId;
     console.log("Comment is ["+ $scope.comment+ "] and rate is ["+ $scope.rate+"] ["+$scope.meseroId+"]");
     $scope.calificar= function(encuestaForm, mesero) {
@@ -57,9 +60,9 @@ angular.module('encuesta.controllers', ['encuesta.services','ionic.rating'])
 	if(encuestaForm.$valid) {
 		// Rate the guy using the factory
     		console.log("Submit function ["+ $scope.comment+ "] and rate is ["+ $scope.rate+"] ["+mesero._id+"]");
-		Encuestas.save({score:$scope.rate,mesero: mesero,comments:$scope.comment, phone:$scope.phonenumber}, function (){}, function (err) { console.log("Hay un error: "+ JSON.stringify(err));});
+		Encuestas.save({score:$scope.rate,mesero: mesero,comments:$scope.comment, phone:$scope.phonenumber,email:$scope.email}, function (){}, function (err) { console.log("Hay un error: "+ JSON.stringify(err));});
+		$state.go('app.thankyou');
 	} else {
-		console.log("Invalid form");
 	}
     }
 }])

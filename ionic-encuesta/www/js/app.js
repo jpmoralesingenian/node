@@ -60,7 +60,17 @@ angular.module('encuesta', ['ionic', 'encuesta.controllers'])
         controller: 'LocationsCtrl'
       }
     }
-  });
+  })
+  .state('app.thankyou', {
+   url: '/thankyou',
+   views: {
+      'menuContent': {
+        templateUrl: 'templates/gracias.html',
+	controller: 'AppCtrl'
+      }
+   }
+  })
+;
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/');
 });

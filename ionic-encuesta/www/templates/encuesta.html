@@ -19,8 +19,22 @@
 		</div>
 		<div class="row">
 		<label class="item item-input">
-			<textarea ng-model="comment" required="false" placeholder="Comentario"></textarea>
+			<textarea ng-model="comment" name="comment" placeholder="Comentario"></textarea>
 		</label>
+		</div>
+		<div class="row">
+		<p>Si deseas recibir ofertas e información incluye aquí tu correo electrónico</p>
+		</div>
+		<div class="row">
+		<label class="item item-input">
+			<input type="email" ng-model="email" ng-required="rate<=2" placeholder="Correo" name="email">
+		</label>
+		<div class="error-container assertive" ng-show="encuestaForm.email.$error.required">
+      			<i class="ion-information-circled"></i> El correo electrónico es requerido
+                </div>
+		<div class="error-container assertive" ng-show="encuestaForm.email.$error.email">
+      			<i class="ion-information-circled"></i> El formato del correo no es correcto
+		</div>
 		</div>
 		<div class="row" ng-if="rate<=2">
 		<p>Vamos a trabajar en mejorar nuestro servicio, por favor dinos a que número te podemos contactar</p>
