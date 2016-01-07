@@ -5,7 +5,11 @@
 // the 2nd parameter is an array of 'requires'
 // 'encuesta.controllers' is found in controllers.js
 angular.module('encuesta', ['ionic', 'encuesta.controllers'])
+.constant("CONFIGURATION",{
+	"rest_url" : "http://joshuacafebar.herokuapp.com/",
+	"image_url" : "http://joshuacafebar.herokuapp.com/"
 
+})
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

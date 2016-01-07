@@ -1,11 +1,11 @@
 angular.module('encuesta.services', ['ngResource']) 
-.factory('Meseros', function ($resource) {
-	return $resource('http://localhost:5000/api/meseros/:meseroId');
-})
-.factory('Locations', function($resource) { 
-	return $resource('http://localhost:5000/api/locations/:locationId');
-})
-.factory('Encuestas', function($resource) { 
-	return $resource('http://localhost:5000/api/encuestas/:encuestaId');
-})
+.factory('Meseros', ['CONFIGURATION','$resource', function (CONFIGURATION,$resource) {
+	return $resource(CONFIGURATION.rest_url + 'api/meseros/:meseroId');
+}])
+.factory('Locations',['CONFIGURATION', '$resource', function (CONFIGURATION,$resource) { 
+	return $resource(CONFIGURATION.rest_url + 'api/locations/:locationId');
+}])
+.factory('Encuestas',['CONFIGURATION', '$resource', function (CONFIGURATION,$resource) { 
+	return $resource(CONFIGURATION.rest_url + 'api/encuestas/:encuestaId');
+}])
 ;
