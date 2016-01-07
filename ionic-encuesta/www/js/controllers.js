@@ -1,5 +1,6 @@
 angular.module('encuesta.controllers', ['encuesta.services','ionic.rating'])
 .controller('AppCtrl',function($scope, $ionicModal, $timeout) {
+	console.log("Inside AppCtrl");
 	var d = new Date();
 	$scope.number = 1+(d.getTime() %3);
 })
@@ -15,6 +16,7 @@ angular.module('encuesta.controllers', ['encuesta.services','ionic.rating'])
     $scope.locattions = Locations.query({},function() {}, function(error) {console.log("There is an error "+JSON.stringify(error));});
 })
 .controller('LocationCtrl', function($scope, $state,Locations) {
+    
     var onSuccess = function(position) {
 	var locations = Locations.query({},function() {
 		var minDistance = -1;
@@ -28,11 +30,9 @@ angular.module('encuesta.controllers', ['encuesta.services','ionic.rating'])
 			}
 		});
 		$scope.currentLocation = minLoc;
+		console.log("Location was correct, on to meseros");
 		$state.go('app.meseros',{"locationId":minLoc._id});	
-	},function(error) {
-		$state.go('app.locations');
-		console.log("There is an error "+JSON.stringify(error));
-	});
+	},onError);
 
 	};
 	// onError Callback receives a PositionError object
@@ -40,8 +40,10 @@ angular.module('encuesta.controllers', ['encuesta.services','ionic.rating'])
 	function onError(error) {
 	    console.log('code: '    + error.code    + '\n' +
         	  'message: ' + error.message + '\n');
+	    $state.go('app.locations');
 	}
-	navigator.geolocation.getCurrentPosition(onSuccess, onError);
+	console.log("Inside the positional thingy");
+	navigator.geolocation.getCurrentPosition(onSuccess, onError,{timeout:5000});
 
 	
 })
