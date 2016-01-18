@@ -6,14 +6,14 @@
 	<form name="encuestaForm" novalidate="" ng-submit="calificar(encuestaForm,mesero)">
 		<img src="{{CONFIGURATION.image_url}}meseros/{{mesero._id}}.jpg" class="image-list-thumb" alt="{{mesero._id}}" width="120"/>
 		
-		<p>Cuéntanos que tal estuvo el servicio de {{mesero.name}}</p>
+		<p>Cuéntenos que tal estuvo el servicio de {{mesero.name}}</p>
 		<div class="row">
 			<div class="col">
 		<rating ng-model="rate" max="max"></rating>
 			</div>
 		</div>
 		<div class="row">
-		<p>Si tienes algún comentario escríbelo aquí</p>
+		<p>Si tiene algún comentario escríbalo aquí</p>
 		</div>
 		<div class="row">
 		<label class="item item-input">
@@ -21,7 +21,7 @@
 		</label>
 		</div>
 		<div class="row">
-		<p>Si deseas recibir ofertas e información incluye aquí tu correo electrónico</p>
+		<p>Si desea recibir ofertas e información incluya aquí su correo electrónico</p>
 		</div>
 		<div class="row">
 		<label class="item item-input">
@@ -35,7 +35,7 @@
 		</div>
 		</div>
 		<div class="row" ng-if="rate<=2">
-		<p>Vamos a trabajar en mejorar nuestro servicio, por favor dinos a que número te podemos contactar</p>
+		<p>Vamos a trabajar en mejorar nuestro servicio, en que número lo podemos contactar</p>
 		</div>
 		<div class="row" ng-if="rate<=2">
 		<label class="item item-input">
