@@ -1,14 +1,12 @@
 <ion-view view-title="Encuesta">
   <ion-content>
-	<div class="list card">
-	<div class="item">
-		<h3>{{mesero.name}}</h3>
-	</div>
-	<div class="item item-body" ng-controller="EncuestaSendCtrl">
+	<div class="list card-dark">
+	<div class="item-dark item item-body" ng-controller="EncuestaSendCtrl">
+		<b>{{mesero.name}}</b>
 	<form name="encuestaForm" novalidate="" ng-submit="calificar(encuestaForm,mesero)">
-		<img src="http://joshuacafebar.herokuapp.com/meseros/{{mesero._id}}.jpg" class="image-list-thumb" alt="{{mesero._id}}" width="120"/>
+		<img src="{{CONFIGURATION.image_url}}meseros/{{mesero._id}}.jpg" class="image-list-thumb" alt="{{mesero._id}}" width="120"/>
 		
-		<p>Cuéntanos que tal estuvo el servicio</p>
+		<p>Cuéntanos que tal estuvo el servicio de {{mesero.name}}</p>
 		<div class="row">
 			<div class="col">
 		<rating ng-model="rate" max="max"></rating>

@@ -6,10 +6,12 @@ angular.module('encuesta.controllers', ['encuesta.services','ionic.rating'])
 })
 .controller('MeserosCtrl', function(CONFIGURATION,$scope, $stateParams,Meseros,Locations) {
     $scope.CONFIGURATION = CONFIGURATION;
+    console.log("Inside MeserosCtrl "+$stateParams.locationId);
     Locations.get({"locationId":$stateParams.locationId}, function(loc) { 
+	console.log("Found the location");
 	$scope.locattion = loc;
     	$scope.meseros = Meseros.query({"locattion_id":loc._id},function() {}, function(error) {console.log("There is an error "+JSON.stringify(error));});
-    });
+    },function(error) {console.log("There is an error "+JSON.stringify(error));});
 })
 .controller('LocationsCtrl', function($scope, $stateParams, Locations) {
     console.log("On the LocationS controller");
@@ -63,8 +65,8 @@ angular.module('encuesta.controllers', ['encuesta.services','ionic.rating'])
 	$scope.sent = true;
 	if(encuestaForm.$valid) {
 		// Rate the guy using the factory
-    		console.log("Submit function ["+ $scope.comment+ "] and rate is ["+ $scope.rate+"] ["+mesero._id+"]");
-		Encuestas.save({score:$scope.rate,mesero: [ mesero ],comments:$scope.comment, phone:$scope.phonenumber,email:$scope.email, when: new Date()}, function (){}, function (err) { console.log("Hay un error: "+ JSON.stringify(err));});
+    		console.log("Submit function ["+ $scope.comment+ "] and rate is ["+ $scope.rate+"] [mesero: "+mesero._id+"]");
+		Encuestas.save({score:$scope.rate,mesero: [ mesero ],comments:$scope.comment, phone:$scope.phonenumber,email:$scope.email, when: new Date()}, function (){}, function (err) { console.log("Hay un error: "+ JSON.stringify(err)+ "->"+err.message);});
 		$state.go('app.thankyou');
 	} else {
 	}

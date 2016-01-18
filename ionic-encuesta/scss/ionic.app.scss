@@ -14,9 +14,9 @@ $assertive:                       #ef473a !default;
 $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
+$base-background-color:           #333 !default;
+$base-color:                      #111 !default;
 /*
-$base-background-color:           #000 !default;
-$base-color:                      #fff !default;
 $light:                           #444 !default;
 $dark:                            #000 !default;
 */
@@ -25,6 +25,12 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
+.scroll {
+  background: $base-background-color;
+}
+.main-menu {
+   color: #dcaf3b;
+}
 // ionic rating
 ul.rating li {
   display: inline;

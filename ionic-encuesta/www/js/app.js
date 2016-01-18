@@ -6,8 +6,8 @@
 // 'encuesta.controllers' is found in controllers.js
 angular.module('encuesta', ['ionic', 'encuesta.controllers'])
 .constant("CONFIGURATION",{
-	"rest_url" : "http://joshuacafebar.herokuapp.com/",
-	"image_url" : "http://joshuacafebar.herokuapp.com/"
+	"rest_url" : "http://api.joshuacafebar.com/",
+	"image_url" : "http://api.joshuacafebar.com/"
 
 })
 .run(function($ionicPlatform) {
