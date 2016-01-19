@@ -44,7 +44,7 @@ angular.module('encuesta.controllers', ['encuesta.services','ionic.rating'])
         	  'message: ' + error.message + '\n');
 	    $state.go('app.locations');
 	}
-	console.log("Inside the positional thingy");
+	console.log("LocationCtrl: Finding location");
 	navigator.geolocation.getCurrentPosition(onSuccess, onError,{timeout:5000});
 
 	
