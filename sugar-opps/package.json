@@ -1,0 +1,22 @@
+{
+  "name": "sugar-opps",
+  "version": "1.0.0",
+  "description": "A module to communicate with SugarCRM and extract all opportunities",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/jpmoralesingenian/node/"
+  },
+  "keywords": [
+    "sugarcrm"
+  ],
+  "author": "Juan Pablo Morales",
+  "license": "ISC",
+  "dependencies": {
+    "dateutil": "^0.1.0",
+    "request": "^2.67.0"
+  }
+}
